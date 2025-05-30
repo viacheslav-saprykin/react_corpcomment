@@ -1,0 +1,20 @@
+export default function FeedForm() {
+  return (
+    <form className="form">
+      <textarea
+        placeholder="sometext"
+        id="feedback-textarea"
+        spellCheck={false}
+      />
+      <label htmlFor="feedback-textarea">
+        Enter your feedback here, remember to #hashtag the company.
+      </label>
+      <div>
+        <p className="u-italic">150</p>
+        <button>
+          <span>Submit</span>
+        </button>
+      </div>
+    </form>
+  );
+}
