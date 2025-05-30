@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { MAX_CHARACTERS } from '../lib/constans';
 
-
-
 export default function FeedForm() {
   const [text, setText] = useState('');
 
@@ -12,7 +10,13 @@ export default function FeedForm() {
     <form className="form">
       <textarea
         value={text}
-        onChange={(event) => setText(event.target.value)}
+        onChange={(event) => {
+          const newText = event.target.value;
+          if (newText.length > MAX_CHARACTERS) {
+            return;
+          }
+          setText(newText);
+        }}
         placeholder="sometext"
         id="feedback-textarea"
         spellCheck={false}
