@@ -32,7 +32,7 @@ export default function FeedbackList() {
 
   return (
     <ol className="feedback-list">
-      {isLoading ? <Spinner /> : null}
+      {isLoading && <Spinner />}
 
       {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
 
