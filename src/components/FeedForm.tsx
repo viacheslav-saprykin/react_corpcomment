@@ -6,17 +6,19 @@ export default function FeedForm() {
 
   const charCount = MAX_CHARACTERS - text.length;
 
-  return (
-    <form className="form">
-      <textarea
-        value={text}
-        onChange={(event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
           const newText = event.target.value;
           if (newText.length > MAX_CHARACTERS) {
             return;
           }
           setText(newText);
-        }}
+        }
+
+  return (
+    <form className="form">
+      <textarea
+        value={text}
+        onChange={handleChange}
         placeholder="sometext"
         id="feedback-textarea"
         spellCheck={false}

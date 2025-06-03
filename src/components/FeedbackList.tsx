@@ -1,25 +1,44 @@
-import { TriangleUpIcon } from "@radix-ui/react-icons";
+import { useEffect, useState } from 'react';
+import FeedbackItem from './FeedbackItem';
+import Spinner from './Spinner';
+import ErrorMessage from './ErrorMessage';
 
 export default function FeedbackList() {
+  const [feedbackItems, setFeedbackItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    fetch(
+      'https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks'
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error();
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setFeedbackItems(data.feedbacks);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setErrorMessage('Something went wrong.');
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
     <ol className="feedback-list">
-      <li className="feedback">
-        <button>
-          <TriangleUpIcon />
-          <span>593</span>
-        </button>
-        <div>
-          <p>V</p>
-        </div>
-        <div>
-          <p>Viacheslav</p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-            atque nulla sint saepe! At, eveniet!
-          </p>
-        </div>
-        <p>4d</p>
-      </li>
+      {isLoading ? <Spinner /> : null}
+
+      {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
+
+      {feedbackItems.map((feedbackItem) => (
+        <FeedbackItem key={feedbackItem.id} feedbackItem={feedbackItem} />
+      ))}
     </ol>
   );
 }
