@@ -1,15 +1,21 @@
-import FeedForm from "./FeedForm";
+import FeedbackForm from "./FeedbackForm";
 import Logo from "./Logo";
 import PageHeading from "./PageHeading";
 import Pattern from "./Pattern";
 
-export default function Header() {
+type HeaderProps = {
+  handleAddToList: (text: string) => void;
+};
+
+export default function Header({handleAddToList}:
+  HeaderProps) 
+  {
   return (
     <header>
       <Pattern />
       <Logo />
       <PageHeading />
-      <FeedForm />
+      <FeedbackForm onAddToList={handleAddToList}/>
 
     </header>
   )
