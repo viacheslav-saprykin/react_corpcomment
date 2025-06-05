@@ -20,7 +20,7 @@ export default function FeedbackForm({ onAddToList }: FeedbackFormProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onAddToList(text);
-    setText(''); // Clear the textarea after submission
+    setText('');
   };
 
   return (
