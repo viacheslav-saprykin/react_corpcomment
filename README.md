@@ -6,4 +6,4 @@
 
 # type TypeScript 
 
-# useState, useMemo, 
+# useState, useMemo, useContext, customHook, 
