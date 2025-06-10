@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { TFeedbackItem } from '../lib/types';
+import { TFeedbackItem } from '../../lib/types';
 
 type Store = {
   feedbackItems: TFeedbackItem[];
