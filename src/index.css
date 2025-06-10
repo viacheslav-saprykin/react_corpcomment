@@ -1,5 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 
+/* CSS CUSTOM PROPERTIES */
+:root {
+  --container-width: min(90vw, 715px);
+  --form-width: min(90%, 470px);
+  --border-radius: clamp(4px, 1vw, 6px);
+  --text-xs: max(11px, 0.75rem);
+  --text-sm: max(12px, 0.8rem);
+  --text-base: max(13px, 0.875rem);
+  --text-lg: max(14px, 0.95rem);
+}
+
 /* RESET */
 *,
 *::before,
@@ -73,7 +84,7 @@ button {
 
 /* BASE */
 body {
-  background-image: linear-gradient(200deg, #654a86, #534292);
+  background: linear-gradient(200deg, #43c6ac, #191654);
   min-height: 100vh;
   font-family: "Inter", sans-serif;
   display: flex;
@@ -93,21 +104,24 @@ body {
   position: relative;
   display: flex;
   justify-content: center;
-  height: 850px;
+  height: min(90vh, 850px);
+  min-height: 600px;
 }
 
 /* CONTAINER */
 .container {
-  width: 715px;
+  width: var(--container-width);
   height: 100%;
-  border-radius: 6px;
+  max-width: 100%;
+  border-radius: var(--border-radius);
   overflow: hidden;
   animation: intro 0.4s;
 }
 
 /* HEADER */
 header {
-  height: 277px;
+  height: clamp(200px, 32vh, 277px);
+  min-height: 200px;
   background-color: #121618;
   display: flex;
   flex-direction: column;
@@ -134,10 +148,12 @@ header {
 /* HEADINGS */
 h1 {
   font-weight: 700;
-  font-size: 36px;
+  font-size: clamp(24px, 4vw, 36px);
   position: relative;
   z-index: 1;
   color: rgba(255, 255, 255, 0.93);
+  text-align: center;
+  line-height: 1.2;
 }
 
 h1::selection,
@@ -148,7 +164,8 @@ h1 *::selection {
 
 /* LOGO */
 .logo {
-  height: 27.5px;
+  height: clamp(22px, 3vw, 27.5px);
+  margin-bottom: 0.5rem;
 }
 
 .logo::selection {
@@ -160,15 +177,19 @@ h1 *::selection {
   z-index: 1;
   backface-visibility: hidden;
   transform: translateZ(0);
+  height: 100%;
+  width: auto;
 }
 
 /* FORM */
 .form {
   margin-top: 20px;
-  height: 123px;
-  width: 470px;
+  min-height: 123px;
+  height: auto;
+  width: var(--form-width);
+  max-width: 100%;
   background-color: rgba(255, 255, 255, 0.04);
-  border-radius: 6px;
+  border-radius: var(--border-radius);
   overflow: hidden;
   position: relative;
   transition: background-color 0.2s, box-shadow 0.2s;
@@ -193,12 +214,18 @@ h1 *::selection {
 
 textarea {
   width: 100%;
-  height: 85px;
+  min-height: 85px;
+  height: auto;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 14px;
+  font-size: var(--text-lg);
   padding: 15px 20px;
   caret-color: rgba(255, 255, 255, 0.25);
+}
+
+textarea:focus-visible {
+  outline: 2px solid #43c6ac;
+  outline-offset: -2px;
 }
 
 textarea::selection {
@@ -219,9 +246,11 @@ label {
   position: absolute;
   top: 13.5px;
   left: 20px;
+  right: 20px;
   color: #fff;
   opacity: 0.42;
   pointer-events: none;
+  font-size: var(--text-lg);
 }
 
 label::selection,
@@ -243,12 +272,13 @@ form div:last-child {
   align-items: center;
   padding: 0 20px;
   margin-top: -8px;
+  min-height: 38px;
 }
 
 /* COUNTER */
 form div:last-child p {
   font-weight: 500;
-  font-size: 13px;
+  font-size: var(--text-base);
   color: rgba(255, 255, 255, 0.25);
   pointer-events: none;
 }
@@ -262,10 +292,11 @@ form div:last-child p > *::selection {
 /* SUBMIT BTN */
 form button {
   color: #161921;
-  font-size: 12px;
+  font-size: var(--text-sm);
   font-weight: 500;
   text-transform: uppercase;
-  padding: 4px 16px 9px;
+  padding: 6px 16px 10px;
+  min-height: 32px;
   border-radius: 500px;
   font-weight: 600;
   background-color: #fff;
@@ -276,8 +307,10 @@ form button {
 }
 
 form button:hover,
-form button:focus {
+form button:focus-visible {
   transform: translateY(-2px) translateZ(0) scale(1.15);
+  outline: 2px solid rgba(255, 255, 255, 0.3);
+  outline-offset: 2px;
 }
 
 form button:active {
@@ -302,11 +335,13 @@ form button span::selection {
 
 /* FEEDBACKS */
 .feedback-list {
-  height: 573px;
+  height: calc(100% - clamp(200px, 32vh, 277px));
+  min-height: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
-  /* background-color: #F3F6F8; */
   background-color: #f7f8f9;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
 
   scrollbar-color: #979ca0 #dbdfe4; /* Firefox */
   scrollbar-width: thin; /* Firefox */
@@ -336,20 +371,23 @@ form button span::selection {
 /* FEEDBACK ITEM */
 .feedback {
   display: grid;
-  grid-template-columns: 40px 85px 6fr 1fr;
+  grid-template-columns: 40px 85px 1fr auto;
   align-items: center;
-  height: 82px;
-  padding-right: 35px;
-  padding-left: 30px;
+  min-height: 82px;
+  height: auto;
+  padding: 12px 35px 12px 30px;
   cursor: pointer;
   border-bottom: 1px solid #e4e7eb;
   transition: all 0.2s;
   color: #3a3c42;
+  gap: 0.75rem;
 }
 
 .feedback--expand {
-  height: 100px;
+  min-height: 100px;
+  height: auto;
   background-color: #fff;
+  padding: 16px 35px 16px 30px;
 }
 
 .feedback--expand > div:nth-child(3) > p:last-child {
@@ -376,7 +414,8 @@ form button span::selection {
 .feedback > div:nth-child(2) {
   height: 49px;
   width: 49px;
-  border-radius: 6px;
+  min-width: 49px;
+  border-radius: var(--border-radius);
   background-color: #564989;
   display: flex;
   justify-content: center;
@@ -407,7 +446,7 @@ form button span::selection {
 }
 
 .feedback > div:nth-child(2) > p {
-  font-size: 24px;
+  font-size: clamp(20px, 3vw, 24px);
   color: #fff;
   font-weight: 700;
   margin-right: -2px;
@@ -415,10 +454,11 @@ form button span::selection {
 
 .feedback > div:nth-child(3) {
   transition: all 0.2s;
+  min-width: 0;
 }
 
 .feedback > div:nth-child(3) > p:first-child {
-  font-size: 11px;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: 500;
@@ -430,22 +470,25 @@ form button span::selection {
 
 .feedback > div:nth-child(3) > p:nth-child(2) {
   color: #141518;
-  font-size: 13px;
+  font-size: var(--text-base);
   margin-top: 1px;
   transition: all 0.2s;
+  line-height: 1.4;
 
   display: -webkit-box;
   max-width: 100%;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  word-wrap: break-word;
 }
 
 .feedback > p:nth-child(4) {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: #898b92;
   margin-left: auto;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 /* UPVOTE BTN */
@@ -453,7 +496,9 @@ form button span::selection {
   cursor: pointer;
   height: 40px;
   width: 40px;
-  border-radius: 6px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: var(--border-radius);
   transition: all 0.2s;
   display: flex;
   flex-direction: column;
@@ -463,6 +508,11 @@ form button span::selection {
 
 .feedback > button:hover {
   background-color: #f3f6f8;
+}
+
+.feedback > button:focus-visible {
+  outline: 2px solid #784a86;
+  outline-offset: 2px;
 }
 
 .feedback > button:hover svg,
@@ -488,7 +538,7 @@ form button span::selection {
 
 .feedback > button span {
   color: #6c6f76;
-  font-size: 11px;
+  font-size: var(--text-xs);
   margin-top: -1px;
 }
 
@@ -507,10 +557,11 @@ form button span::selection {
 /* HASHTAG */
 .hashtags li button {
   align-self: flex-start;
-  font-size: 13px;
+  font-size: var(--text-base);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
-  padding: 7px 14px 9px;
+  padding: 8px 14px 10px;
+  min-height: 36px;
   background-color: rgba(255, 255, 255, 0.06);
   border-radius: 500px;
   cursor: pointer;
@@ -518,9 +569,11 @@ form button span::selection {
 }
 
 .hashtags li button:hover,
-.hashtags li button:focus {
+.hashtags li button:focus-visible {
   color: #fff;
   transform: scale(1.11);
+  outline: 2px solid rgba(255, 255, 255, 0.2);
+  outline-offset: 2px;
 }
 
 .hashtags li button:active {
@@ -542,7 +595,7 @@ form button span::selection {
 /* COPYRIGHT */
 .footer > small {
   color: #a6adb5;
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 
 .footer > small *::selection {
@@ -578,17 +631,50 @@ h1 > span {
   opacity: 0.85;
 }
 
-/* MEDIA QUERIES */
-@media (max-height: 925px) {
-  body {
-    padding: 60px 0;
+/* ACCESSIBILITY & REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
+/* MEDIA QUERIES */
+@media (max-height: 925px) {
+  body {
+    padding: 40px 0;
+  }
+  
+  .app {
+    height: auto;
+    min-height: 70vh;
+  }
+}
+
+/* Планшети портрет */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .hashtags {
+    right: -120px;
+  }
+  
+  .footer {
+    left: -200px;
+  }
+  
+  .container {
+    width: min(85vw, 715px);
+  }
+}
+
+/* Планшети ландшафт та малі десктопи */
 @media (max-width: 1050px) {
   .app {
     flex-direction: column-reverse;
     height: initial;
+    min-height: 80vh;
   }
 
   .hashtags {
@@ -605,6 +691,27 @@ h1 > span {
   }
 }
 
+/* Планшети */
+@media (max-width: 768px) {
+  :root {
+    --container-width: 95vw;
+    --form-width: 90%;
+  }
+  
+  .feedback-list::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .feedback {
+    padding: 14px 25px 14px 20px;
+    gap: 0.5rem;
+  }
+  
+  .feedback--expand {
+    padding: 18px 25px 18px 20px;
+  }
+}
+
 @media (max-width: 775px) {
   body {
     padding-top: 0;
@@ -614,6 +721,7 @@ h1 > span {
 
   .container {
     width: 100vw;
+    border-radius: 0;
   }
 
   .app {
@@ -634,19 +742,29 @@ h1 > span {
   }
 }
 
+/* Мобільні пристрої */
 @media (max-width: 525px) {
+  :root {
+    --container-width: 100vw;
+    --form-width: 100%;
+  }
+  
   header {
-    padding: 35px 15px;
+    padding: 25px 15px;
     height: initial;
+    min-height: 180px;
   }
 
   h1 {
     text-align: center;
+    padding: 0 10px;
   }
 
   .form {
     width: initial;
     align-self: stretch;
+    margin: 15px;
+    border-radius: var(--border-radius);
   }
 
   label {
@@ -654,15 +772,59 @@ h1 > span {
   }
 
   .feedback {
-    grid-template-columns: 40px 85px 1fr;
-    padding-right: 15px;
-    padding-left: 15px;
+    grid-template-columns: auto 1fr auto;
+    padding: 16px 15px;
+    gap: 8px;
+  }
+  
+  .feedback > div:nth-child(2) {
+    margin-left: 0;
+    margin-right: 8px;
+  }
+  
+  /* Зменшуємо контент для економії місця */
+  .feedback > div:nth-child(3) {
+    min-width: 0;
+    overflow: hidden;
+  }
+  
+  .feedback > div:nth-child(3) > p:nth-child(2) {
+    font-size: 12px;
+    -webkit-line-clamp: 1;
+  }
+  
+  /* Компактніша дата */
+  .feedback > p:nth-child(4) {
+    font-size: 10px;
+    min-width: max-content;
+    margin-left: 4px;
   }
 
   .feedback--expand {
     height: initial;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 20px 15px;
+  }
+  
+  .feedback--expand > div:nth-child(3) > p:nth-child(2) {
+    -webkit-line-clamp: initial !important;
+  }
+  
+  /* Touch-friendly buttons */
+  .feedback > button {
+    height: 44px;
+    width: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .hashtags li button {
+    padding: 12px 16px;
+    min-height: 44px;
+  }
+  
+  form button {
+    min-height: 44px;
+    padding: 8px 20px 12px;
   }
 
   .feedback__date {
@@ -671,5 +833,60 @@ h1 > span {
 
   .footer {
     padding: 0 15px;
+  }
+  
+  /* Кращий scrollbar на мобільних */
+  .feedback-list::-webkit-scrollbar {
+    width: 3px;
+  }
+}
+
+/* Дуже маленькі мобільні */
+@media (max-width: 375px) {
+  .feedback {
+    padding: 12px 10px;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+  }
+  
+  /* Переносимо дату під контент */
+  .feedback > p:nth-child(4) {
+    grid-column: 1 / -1;
+    justify-self: end;
+    margin-top: 8px;
+    margin-left: 0;
+    font-size: 11px;
+    opacity: 0.7;
+  }
+  
+  .feedback--expand {
+    padding: 16px 10px;
+  }
+  
+  .feedback--expand > p:nth-child(4) {
+    margin-top: 12px;
+  }
+  
+  .form {
+    margin: 10px;
+  }
+  
+  header {
+    padding: 20px 10px;
+  }
+}
+
+/* Великі екрани */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 800px;
+  }
+  
+  .hashtags {
+    right: -160px;
+  }
+  
+  .footer {
+    left: -250px;
   }
 }
